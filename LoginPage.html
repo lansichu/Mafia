@@ -4,7 +4,9 @@
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 </head>
-<body ng-app="MafiaApp" ng-cloak ng-controller="mafiaController">
+<body ng-app="MafiaApp" ng-controller="mafiaController" ng-cloak >
+
+
 <!--
   Your HTML content here
 -->
@@ -28,21 +30,45 @@
 
 <md-content flex layout-padding>
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <h1>Welcome to Mafia {{ sometext }}</h1>
+        <h1>Welcome to Mafia {{ username }}</h1>
     </section>
 
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <md-input-container class="md-block" flex-gt-xs="50" >
             <label>Enter name</label>
-            <input ng-model="sometext" >
+            <input ng-model="username" >
         </md-input-container>
     </section>
 
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <md-button class="md-raised md-primary">Submit</md-button>
+        <button class="md-raised md-primary" ng-click="action.callBackend()">Submit</button>
     </section>
 </md-content>
 
+<!--<span>-->
+    <!--{{response}}-->
+<!--</span>-->
+<script>
+    var mafiaApp = angular.module("MafiaApp", []);
+
+    mafiaApp.controller('mafiaController', function($scope, $http) {
+        $scope.action = {
+            callBackend: function () {
+
+
+                console.log($scope.username);
+                $http.get('http://localhost:3000/login?name=' + $scope.username).then(function (response) {
+                    $scope.response = response;
+                })
+            }
+        }
+    })
+
+</script>
+
 </body>
+
+
+
 </html>
 
