@@ -45,23 +45,30 @@
     </section>
 </md-content>
 
-<!--<span>-->
-    <!--{{response}}-->
-<!--</span>-->
 <script>
-    var mafiaApp = angular.module("MafiaApp", []);
+    var mafiaApp = angular.module("MafiaApp", ['ngMaterial']);
 
-    mafiaApp.controller('mafiaController', function($scope, $http) {
+    mafiaApp.controller('mafiaController', function($scope, $http, $mdToast) {
         $scope.action = {
             callBackend: function () {
 
 
+
                 console.log($scope.username);
-                $http.get('http://localhost:3000/login?name=' + $scope.username).then(function (response) {
-                    $scope.response = response;
-                })
-            }
+                $http.get('http://localhost:3001/login?name=' + $scope.username).then(function (response) {
+                    $scope.showStatus = response.data;
+
+                                        $mdToast.show(
+                    $mdToast.simple()
+                        .textContent($scope.showStatus)
+                        .hideDelay(3000)                        
+
+                )
+
+
+            })
         }
+    }
     })
 
 </script>
