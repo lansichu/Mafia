@@ -1,0 +1,16 @@
+<div ng-controller="loginController">
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <h1>Welcome to Mafia {{ username }}!</h1>
+    </section>
+
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-input-container class="md-block" flex-gt-xs="50">
+            <label>Please enter your name</label>
+            <input ng-model="username">
+        </md-input-container>
+    </section>
+
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <button class="md-raised md-primary" ng-click="callBackend()">Submit</button>
+    </section>
+</div>
