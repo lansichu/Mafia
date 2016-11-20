@@ -2,11 +2,11 @@ angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvi
     $routeProvider
         .when("/", {
             templateUrl : 'Login/loginView.htm',
-            controller : 'Login/loginController'
+            //controller : 'Login/loginController'
         })
         .when("/lobby", {
             templateUrl : 'Lobby/lobbyView.htm',
-            controller : 'Lobby/lobbyController'
+            //controller : 'Lobby/lobbyController'
         })
 })
     .controller('loginController', function($scope, $http, $mdToast, $location) {
@@ -26,12 +26,3 @@ angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvi
             })
         }
     })
-
-    //.controller('lobbyController', function($scope, $http, $location) {
-    //    $scope.goBack = function () {
-    //        $http.get('http://localhost:3001/').then(function (response) {
-    //            $scope.showStatus = response.data;
-    //                $location.path('/lobby');
-    //        })
-    //    }
-    //})
