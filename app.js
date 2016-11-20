@@ -1,6 +1,13 @@
 var express = require('express')
 var app = express()
 var MongoClient = require('mongodb').MongoClient
+var port = process.env.PORT || 8080;
+
+app.use(express.static(__dirname + '/App'));
+
+app.get('/', function (req, res) {
+    res.sendfile('/App/mafiaApplication.html');
+});
 
 
 app.get('/login', function (req, res) {
@@ -47,8 +54,8 @@ app.get('/login', function (req, res) {
 
 })
 
-app.listen(3001, function () {
-  console.log('Master service activated...')
+app.listen(port, function () {
+  console.log('Our app is running on Port ' + port);
 })
 
 var express = require("express");
