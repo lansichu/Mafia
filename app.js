@@ -30,24 +30,15 @@ app.get('/login', function (req, res) {
                  alive: true
                }
               );
-            res.send(
-				{success: true,
-				message: "Success! Player added"}
-			);
+            res.send({success: true, message: "Success! Player added!"});
             
            }else{
-              res.send(
-				  {success: false,
-				  message: "Name already exists. Please choose another name"}
-			  );
+              res.send({success: false, message: "Name already exists. Please choose another name"});
            }
         })
 
       }else{
-        res.send(
-			{success: false,
-				message: "Error. Something went wrong with the query parameters!"}
-		);
+        res.send({success: false, message: "Error. Something went wrong with the query parameters!"});
       }
 })
 
