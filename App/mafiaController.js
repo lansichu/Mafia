@@ -1,12 +1,12 @@
 angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvider) {
     $routeProvider
-        .when("/login", {
-            templateUrl : 'View/loginView.htm',
-            controller : 'loginController'
+        .when("/", {
+            templateUrl : 'Login/loginView.htm',
+            controller : 'Login/loginController'
         })
         .when("/lobby", {
-            templateUrl : 'View/lobbyView.htm',
-            controller : 'lobbyController'
+            templateUrl : 'Lobby/lobbyView.htm',
+            controller : 'Lobby/lobbyController'
         })
 })
     .controller('loginController', function($scope, $http, $mdToast, $location) {

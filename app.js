@@ -3,10 +3,10 @@ var app = express()
 var MongoClient = require('mongodb').MongoClient
 var port = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + '/App'));
+app.use(express.static('App'));
 
 app.get('/', function (req, res) {
-    res.sendfile('/mafiaApplication.html');
+    res.sendfile('./App/mafiaApplication.html');
 });
 
 
