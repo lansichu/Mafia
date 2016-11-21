@@ -1,6 +1,9 @@
 <div ng-controller="lobbyController">
 <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
     <h1>Welcome to LOBBY !</h1>
-    <button class="md-raised md-primary" ng-click="goBack()">Back</button>
+    <!--<button class="md-raised md-primary" ng-click="goBack()">Exit Game</button>-->
+    <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
+            Exit Game
+    </md-button>
 </section>
 </div>
