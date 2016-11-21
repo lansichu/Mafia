@@ -1,5 +1,10 @@
-angular.module("MafiaApp", ['ngMaterial','ngRoute']).controller('loginController', function($scope, $http, $mdToast, $location) {
+angular.module("MafiaApp.login", [
+    'ngMaterial',
+    'ngRoute'
+    ])
+.controller('loginController', function($scope, $http, $mdToast, $location) {
         $scope.callBackend = function () {
+            console.log($scope);
             console.log($scope.username);
             $http.get('http://localhost:8080/login?name=' + $scope.username).then(function (response) {
                 $scope.showStatus = response.data;
