@@ -1,15 +1,20 @@
-angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvider) {
+angular.module("MafiaApp", [
+    'ngMaterial',
+    'ngRoute', 
+    'MafiaApp.login', 
+    'MafiaApp.lobby'
+    ])
+.config(function($routeProvider) {
     $routeProvider
         .when("/", {
             templateUrl : 'Login/loginView.htm',
-            //controller : 'Login/loginController'
         })
         .when("/lobby", {
             templateUrl : 'Lobby/lobbyView.htm',
-            //controller : 'Lobby/lobbyController'
         })
         .otherwise("/");
 })
+
    .controller('loginController', function($scope, $http, $mdToast, $location, $rootScope) {
        $scope.callBackend = function () {
            console.log($scope.username);
@@ -42,4 +47,3 @@ angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvi
         }
     });
 });
-
