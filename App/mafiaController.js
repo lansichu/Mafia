@@ -4,6 +4,7 @@ angular.module("MafiaApp", [
     'MafiaApp.login', 
     'MafiaApp.lobby'
     ])
+
 .config(function($routeProvider) {
     $routeProvider
         .when("/", {
@@ -16,7 +17,6 @@ angular.module("MafiaApp", [
 })
 
 .run(function($rootScope, $route, $location){
-
     $rootScope.$on('$locationChangeSuccess', function() {
         $rootScope.actualLocation = $location.path();
     });

@@ -2,6 +2,7 @@ angular.module("MafiaApp.lobby", [
     'ngMaterial',
     'ngRoute'
     ])
+
 .controller('lobbyController', function($scope, $mdDialog, $location, $http) {
     $http.get('lobby').then(function (response) {
         $scope.userList = response.data;
@@ -38,5 +39,3 @@ angular.module("MafiaApp.lobby", [
 
     };
     });
-
-
