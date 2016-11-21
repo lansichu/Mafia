@@ -3,7 +3,7 @@ angular.module("MafiaApp.lobby", [
     'ngRoute'
     ])
 
-.controller('lobbyController', function($scope, $mdDialog, $location, $http) {
+.controller('lobbyController', function($scope, $mdDialog, $location, $http, $rootScope) {
     $http.get('lobby').then(function (response) {
         $scope.userList = response.data;
         $scope.$applyAsync();
@@ -24,8 +24,10 @@ angular.module("MafiaApp.lobby", [
 
 
         $mdDialog.show(confirm).then(function() {
+            console.log($rootScope);
             $http.get('leaveLobby?name=' + $rootScope.userName).then(function (response) {
-                if (response.ok == 1 && response.n ==1 ) {
+                console.log(response);
+                if (response.data.ok == 1 && response.data.n ==1 ) {
                     $location.path('login');
                 } else {
                     alert("player could not be deleted");
