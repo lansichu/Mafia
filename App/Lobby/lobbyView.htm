@@ -1,9 +1,19 @@
 <div ng-controller="lobbyController">
-<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-    <h1>Welcome to LOBBY !</h1>
-    <!--<button class="md-raised md-primary" ng-click="goBack()">Exit Game</button>-->
-    <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <h1>Welcome to LOBBY !</h1>
+    </section>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        Players in lobby:
+    </section>
+
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <div ng-repeat="users in userList">
+            {{users.name}}
+        </div>
+    </section>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
             Exit Game
-    </md-button>
-</section>
+        </md-button>
+    </section>
 </div>

@@ -3,7 +3,13 @@ angular.module("MafiaApp.lobby", [
     'ngRoute'
     ])
 .controller('lobbyController', function($scope, $mdDialog, $location, $http) {
-    $scope.status = '  ';
+    $http.get('lobby').then(function (response) {
+        $scope.userList = response.data;
+        $scope.$applyAsync();
+        console.log(response);
+    });
+
+        $scope.status = '  ';
     $scope.customFullscreen = false;
             console.log("That's the lobby!");
     $scope.showConfirm = function(ev) {
@@ -17,7 +23,7 @@ angular.module("MafiaApp.lobby", [
 
 
         $mdDialog.show(confirm).then(function() {
-            $http.get('leaveLobby?name=' + $scope.username).then(function (response) {
+            $http.get('leaveLobby?name=' + $rootScope.userName).then(function (response) {
                 if (response.ok == 1 && response.n ==1 ) {
                     $location.path('login');
                 } else {
