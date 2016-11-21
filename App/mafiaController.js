@@ -9,10 +9,10 @@ angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvi
             //controller : 'Lobby/lobbyController'
         })
 })
-    .controller('loginController', function($scope, $http, $mdToast, $location) {
+   .controller('loginController', function($scope, $http, $mdToast, $location) {
         $scope.callBackend = function () {
             console.log($scope.username);
-            $http.get('http://localhost:3001/login?name=' + $scope.username).then(function (response) {
+            $http.get('http://localhost:8080/login?name=' + $scope.username).then(function (response) {
                 $scope.showStatus = response.data;
                 $mdToast.show(
                     $mdToast.simple()
@@ -21,7 +21,7 @@ angular.module("MafiaApp", ['ngMaterial','ngRoute']).config(function($routeProvi
                 )
                 if (response.data.success == true) {
                     console.log()
-                    $location.path('/lobby');
+                    $location.path('lobby');
                 }
             })
         }
