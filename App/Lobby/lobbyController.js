@@ -2,12 +2,11 @@ angular.module("MafiaApp.lobby", [
     'ngMaterial',
     'ngRoute'
     ])
-.controller('lobbyController', function($scope, $mdDialog, $location) {
+.controller('lobbyController', function($scope, $mdDialog, $location, $http) {
     $scope.status = '  ';
     $scope.customFullscreen = false;
             console.log("That's the lobby!");
     $scope.showConfirm = function(ev) {
-        // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
             .title('Would you like to exit the game?')
             .textContent('Mafia has destroyed you.')
@@ -18,7 +17,14 @@ angular.module("MafiaApp.lobby", [
 
 
         $mdDialog.show(confirm).then(function() {
-            $location.path('login');
+            $http.get('leaveLobby?name=' + $scope.username).then(function (response) {
+                if (response.ok == 1 && response.n ==1 ) {
+                    $location.path('login');
+                } else {
+                    alert("player could not be deleted");
+                    console.log("player could not be deleted");
+                }
+            })
         }, function() {
             console.log("stay");
 
