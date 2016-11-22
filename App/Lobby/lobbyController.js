@@ -3,17 +3,33 @@ angular.module("MafiaApp.lobby", [
     'ngRoute'
     ])
 
-.controller('lobbyController', function($scope, $mdDialog, $location, $http, $rootScope) {
+.controller('lobbyController', function($scope, $mdDialog, $location, $http, $rootScope, $interval) {
+   
     $http.get('lobby').then(function (response) {
         $scope.userList = response.data;
+
+        if($scope.userList.length < 2)
+            $scope.cannotStartGame = false;
+        else
+            $scope.cannotStartGame = true;
+
         $scope.$applyAsync();
-        console.log(response);
     });
 
-        $scope.status = '  ';
-    $scope.customFullscreen = false;
-            console.log("That's the lobby!");
-    $scope.showConfirm = function(ev) {
+    $scope.refreshPlayers = function(){
+        $http.get('lobby').then(function (response) {
+            $scope.userList = response.data;
+            $scope.$applyAsync();
+            console.log("Refresh");
+            $interval(function() {$scope.refreshPlayers()}, 5000);
+
+            //TODO: Stop on leaving the page
+        });
+    }
+
+    $interval(function() {$scope.refreshPlayers()}, 5000);
+
+    $scope.showConfirm = function(ev){
         var confirm = $mdDialog.confirm()
             .title('Would you like to exit the game?')
             .textContent('Mafia has destroyed you.')
@@ -22,22 +38,14 @@ angular.module("MafiaApp.lobby", [
             .ok('Get me out of here.')
             .cancel('Keep me in!');
 
-
         $mdDialog.show(confirm).then(function() {
-            console.log($rootScope);
             $http.get('leaveLobby?name=' + $rootScope.userName).then(function (response) {
-                console.log(response);
                 if (response.data.ok == 1 && response.data.n ==1 ) {
                     $location.path('login');
-                } else {
-                    alert("player could not be deleted");
-                    console.log("player could not be deleted");
+                }else{
+                    alert("Player could not be deleted");
                 }
             })
-        }, function() {
-            console.log("stay");
-
-        });
-
+        }, function() {});
     };
-    });
+});
