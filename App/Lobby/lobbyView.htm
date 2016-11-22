@@ -12,7 +12,7 @@
         </div>
     </section>
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <md-button class="md-primary md-raised" ng-disabled="cannotStartGame" >
+        <md-button class="md-primary md-raised" ng-click="startGame()" ng-disabled="isDisabled" >
             Start Game
         </md-button>
         <md-button class="md-raised" ng-click="showConfirm($event)" >

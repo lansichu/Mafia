@@ -16,15 +16,18 @@ angular.module("MafiaApp", [
         .otherwise("/");
 })
 
-.run(function($rootScope, $route, $location){
-    $rootScope.$on('$locationChangeSuccess', function() {
+.run(function($rootScope, $route, $location, $window){
+    $rootScope.$on('$locationChangeStart', function() {
         $rootScope.actualLocation = $location.path();
     });
 
     $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
             window.history.forward();
-            //alert('Why did you use history back?');
         }
+    });
+
+    $window.addEventListener('beforeunload', function() {
+        console.log("blabla");
     });
 });

@@ -47,6 +47,60 @@ app.get('/lobby', function(req, res){
   })
 })
 
+app.get('/startGame', function(req, res){
+  MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
+    if (err) throw err
+
+    db.collection('Game').update(
+      {
+         _id: 0
+      },
+      {
+         _id: 0,
+         name: "Mafia",
+         started: true,
+         round: 1
+      }, {}, function (err, result) {
+      if (err) throw err
+
+      res.send(result);
+    })
+  })
+})
+
+app.get('/isGameStarted', function(req, res){
+  MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
+    if (err) throw err
+
+    db.collection('Game').find({_id: 0}).toArray(function (err, result) {
+      if (err) throw err
+
+      res.send(result);
+    })
+  })
+})
+
+app.get('/finishGame', function(req, res){
+  MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
+    if (err) throw err
+
+    db.collection('Game').update(
+      {
+         _id: 0
+      },
+      {
+         _id: 0,
+         name: "Mafia",
+         started: false,
+         round: 1
+      }, {}, function (err, result) {
+      if (err) throw err
+
+      res.send(result);
+    })
+  })
+})
+
 app.get('/leaveLobby', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
     if (err) throw err
