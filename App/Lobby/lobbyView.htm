@@ -1,4 +1,4 @@
-<div ng-controller="lobbyController">
+<div ng-controller="lobbyController" flex="100" layout-align="center center">
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <h1>Welcome to LOBBY !</h1>
     </section>
@@ -6,11 +6,19 @@
         Players in lobby:
     </section>
 
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <div ng-repeat="users in userList">
-            {{users.name}}
-        </div>
-    </section>
+    <div layout-align="center center" flex="100" layout="row">
+        <section layout="row" layout-sm="column" flex="50" layout-wrap layout-align="center center">
+            <div ng-repeat="users in userList" flex="50" ng-repeat="quote in randomQuote">
+            <md-list-item class="md-2-line">
+                <img ng-src="https://s-media-cache-ak0.pinimg.com/736x/0e/3d/f6/0e3df60cabeec611be2872b82db57458.jpg" class="md-avatar" alt="{{users.name}}" />
+                <div class="md-list-item-text">
+                    <h3>{{ users.name }}</h3>
+                    //<p>{{ quote.value }}</p>
+                </div>
+            </md-list-item>
+            </div>
+        </section>
+    </div>
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <md-button class="md-primary md-raised" ng-click="startGame()" ng-disabled="isDisabled" >
             Start Game
