@@ -16,6 +16,21 @@ angular.module("MafiaApp.lobby", [
         $scope.$applyAsync();
     });
 
+    //TODO: Ramdonly generate quotes per user
+    //$scope.quotes = [
+    //    {
+    //        value: "You suck"
+    //    },
+    //    {
+    //        value: "I rock"
+    //    },
+    //    {
+    //        value: "I want you"
+    //    }];
+    //
+    //$scope.randomQuote = $scope.quotes[Math.floor(Math.random() * $scope.quotes.length)];
+
+
     $scope.refreshPlayers = function(){
         $http.get('lobby').then(function (response) {
             $scope.userList = response.data;
