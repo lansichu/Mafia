@@ -7,6 +7,7 @@ angular.module("MafiaApp.lobby", [
    
     $scope.isDisabled = true;
     $rootScope.isInLobby = true;
+    $rootScope.admin = false;
 
     $http.get('lobby').then(function (response) {
         $scope.userList = response.data;
@@ -25,52 +26,18 @@ angular.module("MafiaApp.lobby", [
         $scope.$applyAsync();
     });
 
-    //TODO: Randomly generate quotes per user
-    //$scope.quotes = [
-    //    {
-    //        value: "You suck"
-    //    },
-    //    {
-    //        value: "I rock"
-    //    },
-    //    {
-    //        value: "I want you"
-    //    }];
-    //
-    //$scope.randomQuote = $scope.quotes[Math.floor(Math.random() * $scope.quotes.length)];
-
-
-    //$scope.refreshPlayers = function(){
-    //    $http.get('lobby').then(function (response) {
-    //        $scope.userList = response.data;
-    //        $scope.$applyAsync();
-    //
-    //        $http.get('isGameStarted').then(function (response) {
-    //            console.log(response);
-    //            console.log(response.data);
-    //            console.log(response.data[0].started);
-    //
-    //
-    //            if(response.data[0].started){
-    //                alert("Go to the Game!");
-    //            }
-    //        });
-    //
-    //    });
-    //}
-
-    //$interval(function() {
-    //    if($rootScope.isInLobby)
-    //        $scope.refreshPlayers();
-    //}, 5000);
+    socket.on('game started', function(){
+        $location.path('role');
+    });
 
      $scope.startGame = function(){
+        $rootScope.admin = true;
+
          if ($scope.userList.length < 5) {
              alert("Need at least 5 players to play.")
          } else {
-             $location.path('role');
              $http.get('startGame').then(function (response) {
-                 console.log(response);
+                socket.emit('start game', null);
              });
          }
     }
