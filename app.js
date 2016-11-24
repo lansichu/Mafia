@@ -1,7 +1,10 @@
 var express = require('express');
+var http = require('http').Server(app);
 var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var port = process.env.PORT || 8080;
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
 
 app.use(express.static('App'));
 
@@ -34,7 +37,7 @@ app.get('/login', function (req, res) {
       res.send({success: false, message: "Error. Something went wrong with the query parameters!"});
     }
   })
-})
+});
 
 app.get('/lobby', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
@@ -45,7 +48,7 @@ app.get('/lobby', function(req, res){
         res.send(result);
     })
   })
-})
+});
 
 app.get('/startGame', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
@@ -66,7 +69,7 @@ app.get('/startGame', function(req, res){
       res.send(result);
     })
   })
-})
+});
 
 app.get('/isGameStarted', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
@@ -78,7 +81,7 @@ app.get('/isGameStarted', function(req, res){
       res.send(result);
     })
   })
-})
+});
 
 app.get('/finishGame', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
@@ -99,7 +102,7 @@ app.get('/finishGame', function(req, res){
       res.send(result);
     })
   })
-})
+});
 
 app.get('/leaveLobby', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
@@ -113,9 +116,18 @@ app.get('/leaveLobby', function(req, res){
     });
     }
   })
-})
+});
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+
+    socket.on('player', function (username) {
+        console.log('player ' + username);
+        io.emit('new player', username);
+    });
+});
 
 
-app.listen(port, function () {
+server.listen(port, function () {
   console.log('Our app is running on Port ' + port);
-})
+});

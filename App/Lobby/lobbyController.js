@@ -19,6 +19,12 @@ angular.module("MafiaApp.lobby", [
         $scope.$applyAsync();
     });
 
+    socket.on('new player', function(username){
+        console.log(username);
+        $scope.userList.push({name: username});
+        $scope.$applyAsync();
+    });
+
     //TODO: Ramdonly generate quotes per user
     //$scope.quotes = [
     //    {
@@ -54,10 +60,10 @@ angular.module("MafiaApp.lobby", [
         });
     }
 
-    $interval(function() {
-        if($rootScope.isInLobby)
-            $scope.refreshPlayers();
-    }, 5000);
+    //$interval(function() {
+    //    if($rootScope.isInLobby)
+    //        $scope.refreshPlayers();
+    //}, 5000);
 
      $scope.startGame = function(){
         $rootScope.isInLobby = false;
