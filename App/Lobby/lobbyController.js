@@ -3,7 +3,7 @@ angular.module("MafiaApp.lobby", [
     'ngRoute'
     ])
 
-.controller('lobbyController', function($scope, $mdDialog, $location, $http, $rootScope, $interval) {
+.controller('lobbyController', function($scope, $mdDialog, $location, $http, $rootScope) {
    
     $scope.isDisabled = true;
     $rootScope.isInLobby = true;
@@ -25,7 +25,7 @@ angular.module("MafiaApp.lobby", [
         $scope.$applyAsync();
     });
 
-    //TODO: Ramdonly generate quotes per user
+    //TODO: Randomly generate quotes per user
     //$scope.quotes = [
     //    {
     //        value: "You suck"
@@ -40,25 +40,24 @@ angular.module("MafiaApp.lobby", [
     //$scope.randomQuote = $scope.quotes[Math.floor(Math.random() * $scope.quotes.length)];
 
 
-    $scope.refreshPlayers = function(){
-        $http.get('lobby').then(function (response) {
-            $scope.userList = response.data;
-            $scope.$applyAsync();
- 
-            $http.get('isGameStarted').then(function (response) {
-                console.log(response);
-                console.log(response.data);
-                console.log(response.data[0].started);
-
-
-                if(response.data[0].started){
-                    $rootScope.isInLobby = false;
-                    alert("Go to the Game!");
-                }
-            });
-
-        });
-    }
+    //$scope.refreshPlayers = function(){
+    //    $http.get('lobby').then(function (response) {
+    //        $scope.userList = response.data;
+    //        $scope.$applyAsync();
+    //
+    //        $http.get('isGameStarted').then(function (response) {
+    //            console.log(response);
+    //            console.log(response.data);
+    //            console.log(response.data[0].started);
+    //
+    //
+    //            if(response.data[0].started){
+    //                alert("Go to the Game!");
+    //            }
+    //        });
+    //
+    //    });
+    //}
 
     //$interval(function() {
     //    if($rootScope.isInLobby)
@@ -66,10 +65,14 @@ angular.module("MafiaApp.lobby", [
     //}, 5000);
 
      $scope.startGame = function(){
-        $rootScope.isInLobby = false;
-        $http.get('startGame').then(function (response) {
-            console.log(response);
-        });
+         if ($scope.userList.length < 5) {
+             alert("Need at least 5 players to play.")
+         } else {
+             $location.path('role');
+             $http.get('startGame').then(function (response) {
+                 console.log(response);
+             });
+         }
     }
 
     $scope.showConfirm = function(ev){

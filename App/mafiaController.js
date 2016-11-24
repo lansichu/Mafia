@@ -2,7 +2,8 @@ angular.module("MafiaApp", [
     'ngMaterial',
     'ngRoute', 
     'MafiaApp.login', 
-    'MafiaApp.lobby'
+    'MafiaApp.lobby',
+    'MafiaApp.role'
     ])
 
 .config(function($routeProvider) {
@@ -12,6 +13,9 @@ angular.module("MafiaApp", [
         })
         .when("/lobby", {
             templateUrl : 'Lobby/lobbyView.htm',
+        })
+        .when("/role", {
+            templateUrl : "Role/roleView.htm",
         })
         .otherwise("/");
 })
