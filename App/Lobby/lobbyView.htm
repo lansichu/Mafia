@@ -1,30 +1,30 @@
-<div ng-controller="lobbyController" flex="100" layout-align="center center">
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <h1>Welcome to LOBBY !</h1>
-    </section>
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        Players in lobby:
-    </section>
+<div ng-controller="lobbyController">
 
-    <div layout-align="center center" flex="100" layout="row">
-        <section layout="row" layout-sm="column" flex="50" layout-wrap layout-align="center center">
-            <div ng-repeat="users in userList" flex="50" ng-repeat="quote in randomQuote">
-            <md-list-item class="md-2-line">
-                <img ng-src="https://s-media-cache-ak0.pinimg.com/736x/0e/3d/f6/0e3df60cabeec611be2872b82db57458.jpg" class="md-avatar" alt="{{users.name}}" />
-                <div class="md-list-item-text">
-                    <h3>{{ users.name }}</h3>
-                    //<p>{{ quote.value }}</p>
+    <div layout-align="center center" flex="100" layout='row' style="height: 100%">
+        <md-card flex-gt-xs="80" flex-gt-sm="60" flex-gt-md="40" layout-align="center center">
+            <img ng-src="ressources/lobby_img.jpg" class="md-card-image"  layout-align="center center" alt="Lobby">
+            <md-card-title layout-align="center center">
+              <md-card-title-text layout-align="center center">
+                <span class="md-headline">Please wait for other Players to join</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content layout-align="left" layout='column' layout-wrap>
+                <div ng-repeat="users in userList" layout-align="center center">
+                    <md-list-item class="md-2-line">
+                        <img ng-src="ressources/character2.jpg" class="md-avatar" alt{users.name}}" />
+                        <div class="md-list-item-text">
+                            <h3>{{ users.name }}</h3>
+                        </div>
+                    </md-list-item>
                 </div>
-            </md-list-item>
-            </div>
-        </section>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="center center">
+                <md-button class="md-primary md-raised" ng-click="startGame()" ng-disabled="isDisabled" >
+                    Start Game
+                </md-button>
+                <md-button class="md-raised" ng-click="showConfirm($event)" >
+                    Exit Game
+                </md-button>        
+            </md-card-actions>
+      </md-card>
     </div>
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <md-button class="md-primary md-raised" ng-click="startGame()" ng-disabled="isDisabled" >
-            Start Game
-        </md-button>
-        <md-button class="md-raised" ng-click="showConfirm($event)" >
-            Exit Game
-        </md-button>
-    </section>
-</div>

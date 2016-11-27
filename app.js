@@ -54,7 +54,47 @@ app.get('/startGame', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
     if (err) throw err
 
-      //TODO: All logic here!
+    db.collection('Players').find().toArray(function (err, result) {
+        if (err) throw err
+
+        //Initialize with Villager
+
+        var i = 0;
+        var mafia = [];
+        for(i=0; i<(result.length/3); i++){
+          var tmp_item = result[Math.floor(Math.random()*result.length)];
+          if(mafia.indexOf(tmp_item)==-1)
+            //Update status in DB instead
+            mafia.push(tmp_item);
+          else
+            i--;
+        }
+
+       res.send(mafia);
+    })
+  })
+
+  //Update Game to started = true
+  //   db.collection('Game').update(
+  //     {
+  //        _id: 0
+  //     },
+  //     {
+  //        _id: 0,
+  //        name: "Mafia",
+  //        started: true,
+  //        round: 1
+  //     }, {}, function (err, result) {
+  //     if (err) throw err
+
+  //     res.send(result);
+  //   })
+  // })
+});
+
+app.get('/reset', function(req, res){
+  MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
+    if (err) throw err
 
     db.collection('Game').update(
       {
@@ -63,14 +103,18 @@ app.get('/startGame', function(req, res){
       {
          _id: 0,
          name: "Mafia",
-         started: true,
+         started: false,
          round: 1
       }, {}, function (err, result) {
-      if (err) throw err
+        if (err) throw err
 
-      res.send(result);
+        db.collection('Players').remove({}, {}, function (err, result) {
+          if (err) throw err
+
+          res.send({resetMessage: "Game got reset"});
+      })
     })
-  })
+})
 });
 
 app.get('/leaveLobby', function(req, res){
