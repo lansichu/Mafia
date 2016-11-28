@@ -15,7 +15,7 @@ angular.module("MafiaApp.lobby", [
             if($scope.userList.length < 2)
                 $scope.isDisabled = false;
             else
-                $scope.isDisabled = true;
+                $scope.isDisabled = false;
 
             $scope.$applyAsync();
         });

@@ -3,7 +3,8 @@ angular.module("MafiaApp", [
     'ngRoute', 
     'MafiaApp.login', 
     'MafiaApp.lobby',
-    'MafiaApp.role'
+    'MafiaApp.role',
+    'MafiaApp.game'
     ])
 
 .config(function($routeProvider) {
@@ -16,6 +17,9 @@ angular.module("MafiaApp", [
         })
         .when("/role", {
             templateUrl : "Role/roleView.htm",
+        })
+         .when("/game", {
+            templateUrl : "Game/gameView.htm",
         })
         .otherwise("/");
 })

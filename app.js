@@ -39,6 +39,17 @@ app.get('/login', function (req, res) {
   })
 });
 
+app.get('/myRole', function (req, res) {
+  MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
+    if (err) throw err
+
+    db.collection('Players').find({_id: req.query.name}).toArray(function (err, result) {
+      if (err) throw err
+        res.send(result);  
+    })
+  })
+});
+
 app.get('/lobby', function(req, res){
   MongoClient.connect('mongodb://connection:connection@ds147777.mlab.com:47777/mafiadb', function (err, db) {
     if (err) throw err
@@ -57,17 +68,40 @@ app.get('/startGame', function(req, res){
     db.collection('Players').find().toArray(function (err, result) {
         if (err) throw err
 
-        //Initialize with Villager
-
+        //Initialize with Villagers
         var i = 0;
+        for(i=0; i<result.length; i++){
+          console.log("set role for " +result[i]._id);
+          db.collection('Players').update(
+            {
+               _id: result[i]._id
+            },
+            {
+               _id: result[i]._id,
+               name: result[i].name,
+               role: "Villager",
+               alive: true
+            }, {}, function (err, result) {})
+        }
+
         var mafia = [];
         for(i=0; i<(result.length/3); i++){
           var tmp_item = result[Math.floor(Math.random()*result.length)];
-          if(mafia.indexOf(tmp_item)==-1)
-            //Update status in DB instead
+          if(mafia.indexOf(tmp_item)==-1){
             mafia.push(tmp_item);
-          else
+            db.collection('Players').update(
+              {
+                 _id: tmp_item._id
+              },
+              {
+                 _id: tmp_item._id,
+                 name: tmp_item.name,
+                 role: "Mafia",
+                 alive: true
+              }, {}, function (err, result) {})
+          }else{
             i--;
+          }
         }
 
        res.send(mafia);
